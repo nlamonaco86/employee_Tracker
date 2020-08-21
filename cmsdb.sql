@@ -1,18 +1,18 @@
-BOILERPLATE
+-- BOILERPLATE
 DROP DATABASE IF EXISTS cmsdb;
 
 CREATE DATABASE cmsdb;
 
 USE cmsdb;
 
-DEPARTMENT 
+-- DEPARTMENT 
 CREATE TABLE departments (
   deptID INT,
   dept VARCHAR (30) NOT NULL,
   primary key (deptID)
 )
 
-ROLE
+-- ROLE
 CREATE TABLE roles (
 roleID INT,
 title VARCHAR(30) NOT NULL,
@@ -30,4 +30,4 @@ manager_id INT DEFAULT NULL,
 primary key (empID)
 )
 
-SELECT * FROM emprole;
+SELECT * FROM employees;
