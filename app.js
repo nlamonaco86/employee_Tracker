@@ -50,7 +50,7 @@ const viewACME = () => {
     inquirer.prompt([{
         type: "list",
         message: "What would you like to view?",
-        choices: ["employee", "department", "emprole"],
+        choices: ["employees", "departments", "roles"],
         name: "toView"
     }]).then(response => {
         //parametized table name shortens menu length AND overall code length
@@ -99,7 +99,7 @@ const addACMEe = (choice) => {
 //add the employee, department role to the database
 //parametize for dept and role next
 const addToDB = acmeRecord => {
-    connection.query("INSERT INTO employee SET ?", acmeRecord, (err, results) => {
+    connection.query("INSERT INTO employees SET ?", acmeRecord, (err, results) => {
         if (err) throw err;
         mainMenu();
     })
@@ -107,7 +107,7 @@ const addToDB = acmeRecord => {
 
 const updateACME = () => {
     //selects the employees and prints to console as a list of choices in an Inquirer checkbox   
-    connection.query("SELECT * FROM employee", (err, results) => {
+    connection.query("SELECT * FROM employees", (err, results) => {
         if (err) throw err;
         let choices = results.map(row => {
             return {
@@ -132,7 +132,7 @@ const updateACME = () => {
         ]).then(response => {
             //Not working, something with syntax, it doesn't change the employee role but also doesn't throw an error
             let changes = [response.newRole, response.last_name]            
-            connection.query("UPDATE employee SET role_id = ? WHERE last_name = ?", changes,
+            connection.query("UPDATE employees SET role_id = ? WHERE last_name = ?", changes,
                 (err, results) => {
                     if (err) throw err;
                 });
