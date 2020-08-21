@@ -1,8 +1,8 @@
 deptID,dept
-,Sales
-,Customer Service
-,Research & Development
-,Legal
-,Human & Animal Resources
-,Security
-,Maintenance
+1,Sales
+2,Customer Service
+3,Research & Development
+4,Legal
+5,Human & Animal Resources
+6,Security
+7,Maintenance
