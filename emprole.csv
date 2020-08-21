@@ -1,0 +1,6 @@
+roleID,title,salary,department_id
+,Employee,40000,
+,Supervisor,50000,
+,Manager,70000,
+,Vice President,250000,
+,Chief Executive Officer,9000000,

@@ -10,7 +10,7 @@ const inquirer = require("inquirer");
 //     database: "cmsdb"
 // });
 
-// launch main menu on startup
+// //launch main menu on startup
 // connection.connect(function (err) {
 //     if (err) throw err;
 //     console.log("connected as id " + connection.threadId);
@@ -36,10 +36,11 @@ const mainMenu = () => {
                     return console.log("view menu");
                 case "UPDATE":
                     return console.log("update menu");
-                // default:
-                //     connection.end();
+                default:
+                    connection.end();
             }
         });
 }
+
 
 mainMenu();
