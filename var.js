@@ -18,9 +18,12 @@ let empQ = [{
 }]
 
 let deptQ = [{
-    type: "list",
-    message: "Select a Department:",
-    choices: ["Sales", "Customer Service", "Research & Development", "Legal", "Human & Animal Resources", "Security", "Maintenance"],
+    type: "input",
+    message: "Department ID #",
+    name: "deptID"
+},{
+    type: "input",
+    message: "Department to Add:",
     name: "dept"
 }]
 

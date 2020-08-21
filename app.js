@@ -37,7 +37,7 @@ const mainMenu = () => {
                 case "VIEW":
                     return viewACME();
                 case "UPDATE":
-                    return console.log("update menu");
+                    return updateACME();
                 default:
                     connection.end();
             }
@@ -73,16 +73,15 @@ const addACMEQ = () => {
         name: "toAdd"
     })
         .then(response => {
-            //switch case triggers 3 different functions, depending on what they asked
-            //since they're so similar, combine them afterwards
+            //add employee function works, need to fix parameterization? for role and dept to use same functions
             //can't this switchboard get shortened too?
             switch (response.toAdd) {
                 case "New Employee":
                     return addACMEe(empQ);
                 case "New Department":
-                    return console.log("new dept");
+                    return addACMEe(deptQ);
                 case "New Role":
-                    return console.log("new role");
+                    return addACMEe(roleQ);
                 default:
                     connection.end();
             }
@@ -91,8 +90,8 @@ const addACMEQ = () => {
 }
 // Create a new ACME department, employee or role
 //parametize for dept and role next
-const addACMEe = () => {
-    return inquirer.prompt(empQ)
+const addACMEe = (choice) => {
+    return inquirer.prompt(choice)
         .then(response => {
             addToDB(response);
         });
@@ -105,3 +104,39 @@ const addToDB = acmeRecord => {
         mainMenu();
     })
 }
+
+const updateACME = () => {
+    //selects the employees and prints to console as a list of choices in an Inquirer checkbox   
+    connection.query("SELECT * FROM employee", (err, results) => {
+        if (err) throw err;
+        let choices = results.map(row => {
+            return {
+                name: `EMPLOYEE ID: ${row.empID} | ${row.first_name} | ${row.last_name} | ROLE ID: ${row.role_id} | MANAGER ID: ${row.manager_id}`,
+                value: row
+            };
+        });
+        //Get the employee name to promote or demote
+        return inquirer.prompt([
+            {
+                type: "list",
+                message: "Select Unfortunate Employee to Demote:",
+                choices,
+                name: "unfortunate",
+            },
+            {
+                type: "list",
+                message: "Enter New Role ID:",
+                choices: [1, 2, 3, 4, 5],
+                name: "newRole"
+            }
+        ]).then(response => {
+            //Not working, something with syntax, it doesn't change the employee role but also doesn't throw an error
+            let changes = [response.newRole, response.last_name]            
+            connection.query("UPDATE employee SET role_id = ? WHERE last_name = ?", changes,
+                (err, results) => {
+                    if (err) throw err;
+                });
+            mainMenu();
+        });
+    })
+};
