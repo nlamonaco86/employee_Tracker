@@ -20,7 +20,7 @@ salary DECIMAL NOT NULL,
 primary key (roleID)
 )
 
-EMPLOYEE
+-- EMPLOYEE
 CREATE TABLE employees (
 empID INT AUTO_INCREMENT,
 first_name VARCHAR(30) NOT NULL,

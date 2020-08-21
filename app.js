@@ -77,11 +77,11 @@ const addACMEQ = () => {
             //can't this switchboard get shortened too?
             switch (response.toAdd) {
                 case "New Employee":
-                    return addACMEe(empQ);
+                    return addACME("employees", empQ);
                 case "New Department":
-                    return addACMEe(deptQ);
+                    return addACME("departments", deptQ);
                 case "New Role":
-                    return addACMEe(roleQ);
+                    return addACME("roles", roleQ);
                 default:
                     connection.end();
             }
@@ -90,16 +90,16 @@ const addACMEQ = () => {
 }
 // Create a new ACME department, employee or role
 //parametize for dept and role next
-const addACMEe = (choice) => {
+const addACME = (string, choice) => {
     return inquirer.prompt(choice)
         .then(response => {
-            addToDB(response);
+            addToDB(string, response);
         });
 }
 //add the employee, department role to the database
 //parametize for dept and role next
-const addToDB = acmeRecord => {
-    connection.query("INSERT INTO employees SET ?", acmeRecord, (err, results) => {
+const addToDB = (tableName, acmeRecord) => {
+    connection.query(`INSERT INTO ${tableName} SET ?`, acmeRecord, (err, results) => {
         if (err) throw err;
         mainMenu();
     })
@@ -119,9 +119,9 @@ const updateACME = () => {
         return inquirer.prompt([
             {
                 type: "list",
-                message: "Select Unfortunate Employee to Demote:",
+                message: "Select Employee to Promote/Demote:",
                 choices,
-                name: "unfortunate",
+                name: "target",
             },
             {
                 type: "list",
