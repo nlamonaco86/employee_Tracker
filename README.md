@@ -1,6 +1,6 @@
 # MySQL: Employee Tracker
-## Nicholas La Monaco
-## 8/21/2020
+Nicholas La Monaco
+8/21/2020
 
 A solution for managing a company's employees using node, inquirer, and MySQL. This fully functional CMS system using the CLI to manage employees, departments, and roles. 
 
