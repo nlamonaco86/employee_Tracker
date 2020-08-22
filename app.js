@@ -50,7 +50,7 @@ const viewACME = () => {
     inquirer.prompt([{
         type: "list",
         message: "What would you like to view?",
-        choices: ["employees", "departments", "roles"],
+        choices: ["EMPLOYEES", "DEPARTMENTS", "ROLES"],
         name: "toView"
     }]).then(response => {
         //parametized table name shortens menu length AND overall code length
@@ -73,7 +73,6 @@ const addACMEQ = () => {
         name: "toAdd"
     })
         .then(response => {
-            //add employee function works, need to fix parameterization? for role and dept to use same functions
             //can't this switchboard get shortened too?
             switch (response.toAdd) {
                 case "New Employee":
@@ -89,15 +88,13 @@ const addACMEQ = () => {
         });
 }
 // Create a new ACME department, employee or role
-//parametize for dept and role next
 const addACME = (string, choice) => {
     return inquirer.prompt(choice)
         .then(response => {
             addToDB(string, response);
         });
 }
-//add the employee, department role to the database
-//parametize for dept and role next
+//add the employee, department or role to the database
 const addToDB = (tableName, acmeRecord) => {
     connection.query(`INSERT INTO ${tableName} SET ?`, acmeRecord, (err, results) => {
         if (err) throw err;
@@ -105,6 +102,7 @@ const addToDB = (tableName, acmeRecord) => {
     })
 }
 
+// Update employee information
 const updateACME = () => {
     //selects the employees and prints to console as a list of choices in an Inquirer checkbox   
     connection.query("SELECT * FROM employees", (err, results) => {
@@ -130,9 +128,8 @@ const updateACME = () => {
                 name: "newRole"
             }
         ]).then(response => {
-            //Not working, something with syntax, it doesn't change the employee role but also doesn't throw an error
-            let changes = [response.newRole, response.last_name]            
-            connection.query("UPDATE employees SET role_id = ? WHERE last_name = ?", changes,
+          //dynamic query updates that employee's ID           
+            connection.query("UPDATE employees SET role_id = ? WHERE empID = ?", [response.newRole, response.target.empID],
                 (err, results) => {
                     if (err) throw err;
                 });
